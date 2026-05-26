@@ -1,5 +1,8 @@
 # WhereTheBotica
 https://excalidraw.com/#json=xP3tL5glE_bJe1_-9N5Yc,K7SpyIxzlmYD10n1315yag
+
+You can reach to the game from the link below:
+https://lalocchi.github.io/WhereTheBotica/
 ## Game Description
 
 The player controls Obotic, a small robot who is trying to find Botica after she disappears from the battery field. The game has two puzzle/adventure levels and a final boss fight against Fredge.
