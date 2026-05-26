@@ -1,0 +1,140 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #111827;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#game-container {
+  width: 800px;
+  min-height: 600px;
+  background: #1f2937;
+  border: 4px solid #374151;
+  position: relative;
+}
+
+.screen {
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  padding: 12px 24px;
+  border: none;
+  background: #22c55e;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#hud {
+  height: 50px;
+  background: #111827;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: bold;
+}
+
+#game-board {
+  width: 800px;
+  height: 550px;
+  position: relative;
+  background: #d1d5db;
+  overflow: hidden;
+}
+
+.entity {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+
+.player {
+  background-image: url("./images/Obotic1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  width: 64px;
+  height: 64px;
+}
+
+.wall {
+  background: #6b7280;
+  border: 2px solid #374151;
+}
+
+.batberry {
+  background-image: url("./images/battery1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  width: 16px;
+  height: 16px;
+}
+
+.teleporter {
+  background: #22c55e;
+  border: 3px solid #15803d;
+  box-shadow: 0 0 15px #22c55e;
+}
+
+.electric {
+  background: #ef4444;
+  border: 2px solid #991b1b;
+}
+
+.electric.off {
+  background: #7f1d1d;
+  opacity: 0.4;
+}
+
+.gate {
+  background: #facc15;
+  border: 3px solid #92400e;
+}
+
+.boss {
+  background-image: url("./images/Fredge.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  width: 64px;
+  height: 64px;
+}
+
+.botica {
+  background-image: url("./images/Botica1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  width: 64px;
+  height: 64px;
+}
+
+.ice {
+  background: #bae6fd;
+  border: 2px solid #0284c7;
+}
