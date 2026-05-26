@@ -86,7 +86,11 @@ function createElement(className, x, y, width = 40, height = 40) {
 }
 
 function createPlayer(x, y) {
-  player = createElement("player", x, y);
+  player = createElement("player", x, y,40,40);
+  player.hitboxOffsetX = 8;
+  player.hitboxOffsetY = 24;
+  player.hitboxWidth = 28;
+  player.hitboxHeight = 22;
 }
 
 function createWall(x, y) {
@@ -171,26 +175,26 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
-function movePlayer() {
-  let speed = 3;
-  let oldX = player.x;
-  let oldY = player.y;
+// function movePlayer() {
+//   let speed = 3;
+//   let oldX = player.x;
+//   let oldY = player.y;
 
-  if (keys["arrowup"] || keys["w"]) player.y -= speed;
-  if (keys["arrowdown"] || keys["s"]) player.y += speed;
-  if (keys["arrowleft"] || keys["a"]) player.x -= speed;
-  if (keys["arrowright"] || keys["d"]) player.x += speed;
+//   if (keys["arrowup"] || keys["w"]) player.y -= speed;
+//   if (keys["arrowdown"] || keys["s"]) player.y += speed;
+//   if (keys["arrowleft"] || keys["a"]) player.x -= speed;
+//   if (keys["arrowright"] || keys["d"]) player.x += speed;
 
-  if (player.x < 0) player.x = 0;
-  if (player.y < 0) player.y = 0;
-  if (player.x + player.width > 800) player.x = 800 - player.width;
-  if (player.y + player.height > 550) player.y = 550 - player.height;
+//   if (player.x < 0) player.x = 0;
+//   if (player.y < 0) player.y = 0;
+//   if (player.x + player.width > 800) player.x = 800 - player.width;
+//   if (player.y + player.height > 550) player.y = 550 - player.height;
 
-  player.oldX = oldX;
-  player.oldY = oldY;
+//   player.oldX = oldX;
+//   player.oldY = oldY;
 
-  updatePosition(player);
-}
+//   updatePosition(player);
+// }
 function movePlayerOneTile(key) {
   let oldX = player.x;
   let oldY = player.y;
@@ -227,13 +231,23 @@ function updatePosition(entity) {
   entity.element.style.left = entity.x + "px";
   entity.element.style.top = entity.y + "px";
 }
-
+function getHitbox(entity) {
+  return {
+    x: entity.x + (entity.hitboxOffsetX || 0),
+    y: entity.y + (entity.hitboxOffsetY || 0),
+    width: entity.hitboxWidth || entity.width,
+    height: entity.hitboxHeight || entity.height
+  };
+}
 function collides(a, b) {
+  const boxA = getHitbox(a);
+  const boxB = getHitbox(b);
+
   return (
-    a.x < b.x + b.width &&
-    a.x + a.width > b.x &&
-    a.y < b.y + b.height &&
-    a.y + a.height > b.y
+    boxA.x < boxB.x + boxB.width &&
+    boxA.x + boxA.width > boxB.x &&
+    boxA.y < boxB.y + boxB.height &&
+    boxA.y + boxA.height > boxB.y
   );
 }
 
