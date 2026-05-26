@@ -95,6 +95,9 @@ function createPlayer(x, y) {
 
 function createWall(x, y) {
   const wall = createElement("wall", x, y);
+  wall.hitboxOffsetY = 8;
+  wall.hitboxHeight = 32;
+
   walls.push(wall);
 }
 
@@ -114,10 +117,10 @@ function loadLevel1() {
 
   createPlayer(0, 510);
 
-  for (let i = 2; i <= 6; i++) createWall(i * tileSize, 440);
-  for (let i = 3; i <= 7; i++) createWall(280, i * tileSize);
-  for (let i = 7; i <= 10; i++) createWall(i * tileSize, 160);
-  for (let i = 4; i <= 9; i++) createWall(440, i * tileSize);
+  for (let i = 2; i <= 6; i++) createWall(i * tileSize, 440 - 8);
+  for (let i = 3; i <= 7; i++) createWall(280, i * tileSize - 8);
+  for (let i = 7; i <= 10; i++) createWall(i * tileSize, 160 - 8);
+  for (let i = 4; i <= 9; i++) createWall(440, i * tileSize - 8);
 
   createBatberry(400, 400);
   createBatberry(360, 280);
