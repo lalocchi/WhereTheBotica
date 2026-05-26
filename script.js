@@ -161,11 +161,21 @@ function loadLevel2() {
   createBatberry(560, 400);
   createBatberry(680, 280);
 
-  electricTiles.push(createElement("electric", 200, 400));
-  electricTiles.push(createElement("electric", 400, 440));
-  electricTiles.push(createElement("electric", 560, 200));
+  const electric1 = createElement("electric", 200, 400);
+electric1.hitboxOffsetY = 8;
+electric1.hitboxHeight = 32;
+electricTiles.push(electric1);
 
-  gate = createElement("gate", 680, 440);
+const electric2 = createElement("electric", 400, 440);
+electric2.hitboxOffsetY = 8;
+electric2.hitboxHeight = 32;
+electricTiles.push(electric2);
+
+const electric3 = createElement("electric", 560, 200);
+electric3.hitboxOffsetY = 8;
+electric3.hitboxHeight = 32;
+electricTiles.push(electric3);
+gate = createElement("gate", 680, 440);
 }
 
 function gameLoop() {
