@@ -321,3 +321,10 @@ function winGame() {
 
   highScoreText.textContent = highScore;
 }
+function loseGame() {
+  gameScreen.classList.add("hidden");
+  gameOverScreen.classList.remove("hidden");
+
+  endTitle.textContent = "Game Over";
+  endMessage.textContent = "Obotic ran out of Batberries.";
+}
