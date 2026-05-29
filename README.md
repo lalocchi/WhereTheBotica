@@ -99,3 +99,4 @@ Main functions:
 - Player movement system implemented
 - Collision detection implemented
 - Score and lose conditions added
+- Start screen and game over screen added
