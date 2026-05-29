@@ -17,6 +17,7 @@ const bossHpText = document.getElementById("boss-hp");
 
 const tileSize = 40;
 
+let battleMessage = null;
 let boss = null;
 let botica = null;
 let bossHP = 3;
@@ -207,6 +208,9 @@ function loadLevel3() {
 
   botica.element.style.opacity = "0.4";
 
+  battleMessage = createElement("battle-message", 260, 330, 280, 40);
+  battleMessage.element.textContent = "Choose a card!";
+
   bossPanel.classList.remove("hidden");
   bossHpText.textContent = bossHP;
 }
@@ -220,16 +224,17 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 function playCard(cardType) {
   if (currentLevel !== 3 || bossHP <= 0) return;
 
   if (cardType === "quick") {
-    if (score < 1) {
+    if (score < 2) {
       loseGame();
       return;
     }
 
-    score--;
+    score -= 2;
 
     let damage = 1;
 
@@ -241,20 +246,22 @@ function playCard(cardType) {
   }
 
   if (cardType === "heavy") {
-    if (score < 2) {
+    if (score < 3) {
+      loseGame();
       return;
     }
 
-    score -= 2;
+    score -= 3;
     bossHP -= 2;
   }
 
   if (cardType === "shield") {
-    if (score < 1) {
+    if (score < 2) {
+      loseGame();
       return;
     }
 
-    score--;
+    score -= 2;
     shieldActive = true;
   }
 
@@ -270,13 +277,15 @@ function playCard(cardType) {
 
   bossAttack();
 }
+
 function bossAttack() {
   if (shieldActive) {
     shieldActive = false;
+    showBattleMessage("Shield blocked Fredge's attack!");
     return;
   }
 
-  score--;
+  score -= 2;
 
   if (score <= 0) {
     score = 0;
@@ -286,6 +295,7 @@ function bossAttack() {
   }
 
   scoreText.textContent = score;
+  showBattleMessage("Fredge attacked! -2 Batberries");
 }
 
 function defeatBoss() {
@@ -418,4 +428,9 @@ function loseGame() {
 
   endTitle.textContent = "Game Over";
   endMessage.textContent = "Obotic ran out of Batberries.";
+}
+function showBattleMessage(message) {
+  if (!battleMessage) return;
+
+  battleMessage.element.textContent = message;
 }
