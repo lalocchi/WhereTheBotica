@@ -100,3 +100,4 @@ Main functions:
 - Collision detection implemented
 - Score and lose conditions added
 - Start screen and game over screen added
+- Restart functionality added
