@@ -1,8 +1,18 @@
 # WhereTheBotica
-https://excalidraw.com/#json=xP3tL5glE_bJe1_-9N5Yc,K7SpyIxzlmYD10n1315yag
+## Planning Sketch
 
+![Game Sketch](./images/wherethebotica-sketch.png)
+https://excalidraw.com/#json=sMPndXmfCaipruKnM9nwp,K2t92aI68Bi2q2R6n2ZvrQ
+
+## AI Usage
+AI tools were used for planning, debugging, and understanding JavaScript concepts.
+
+AI Diary:[AI_DIARY.md](./AI_DIARY.md)
+
+## Live Demo.
 You can reach to the game from the link below:
 https://lalocchi.github.io/WhereTheBotica/
+
 ## Game Description
 
 The player controls Obotic, a small robot who is trying to find Botica after she disappears from the battery field. The game has two puzzle/adventure levels and a final boss fight against Fredge.
@@ -94,6 +104,27 @@ Main functions:
 - playCard()
 - restartGame()
 - saveHighScore()
+
+## Tech Decisions
+
+This project uses a functional programming approach instead of OOP.
+
+I chose the functional approach because the game is relatively small and easier to manage using objects and standalone functions. It also helped me focus on learning DOM manipulation and game logic without adding the complexity of multiple classes.
+
+The game was built using:
+- HTML
+- CSS
+- Vanilla JavaScript
+
+No frameworks, libraries, or game engines were used.
+
+## Known Bugs / Future Improvements
+
+- Improve boss fight animations
+- Add sound effects
+- Improve level transitions
+- Add attack cards
+- Add additional levels and puzzles
 
 ## Development Milestones
 - Player movement system implemented
