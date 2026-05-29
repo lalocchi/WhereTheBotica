@@ -95,5 +95,5 @@ Main functions:
 - restartGame()
 - saveHighScore()
 
-
-
+## Development Milestones
+- Player movement system implemented
