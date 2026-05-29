@@ -98,3 +98,4 @@ Main functions:
 ## Development Milestones
 - Player movement system implemented
 - Collision detection implemented
+- Score and lose conditions added
