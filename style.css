@@ -108,6 +108,18 @@ button {
   background: #7f1d1d;
   opacity: 0.4;
 }
+.enemy {
+  background-image: url("./images/enemy_ilbiz.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+
+  width: 48px;
+  height: 48px;
+}
 
 .gate {
   background: #facc15;

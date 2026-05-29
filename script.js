@@ -17,6 +17,7 @@ const bossHpText = document.getElementById("boss-hp");
 
 const tileSize = 40;
 
+let movingEnemies = [];
 let battleMessage = null;
 let boss = null;
 let botica = null;
@@ -67,6 +68,7 @@ function restartGame() {
 }
 
 function clearBoard() {
+  movingEnemies = [];
   gameBoard.innerHTML = "";
   walls = [];
   batberries = [];
@@ -116,6 +118,24 @@ function createWall(x, y) {
 function createBatberry(x, y) {
   const batberry = createElement("batberry", x, y);
   batberries.push(batberry);
+}
+
+function createMovingEnemy(x, y, direction, distance) {
+  const enemy = createElement("enemy", x, y, 48, 48);
+  enemy.startX = x;
+  enemy.startY = y;
+  enemy.direction = direction;
+  enemy.distance = distance;
+  enemy.speed = 1;
+  enemy.moveForward = true;
+
+  enemy.hitboxOffsetX = 16;
+  enemy.hitboxOffsetY = 24;
+  enemy.hitboxWidth = 32;
+  enemy.hitboxHeight = 32;
+
+  movingEnemies.push(enemy);
+  electricTiles.push(enemy);
 }
 
 function loadLevel1() {
@@ -173,20 +193,10 @@ function loadLevel2() {
   createBatberry(560, 400);
   createBatberry(680, 280);
 
-  const electric1 = createElement("electric", 200, 400);
-electric1.hitboxOffsetY = 8;
-electric1.hitboxHeight = 32;
-electricTiles.push(electric1);
+createMovingEnemy(200, 400, "horizontal", 160);
+createMovingEnemy(400, 320, "vertical", 120);
+createMovingEnemy(560, 200, "horizontal", 120);
 
-const electric2 = createElement("electric", 400, 440);
-electric2.hitboxOffsetY = 8;
-electric2.hitboxHeight = 32;
-electricTiles.push(electric2);
-
-const electric3 = createElement("electric", 560, 200);
-electric3.hitboxOffsetY = 8;
-electric3.hitboxHeight = 32;
-electricTiles.push(electric3);
 gate = createElement("gate", 680, 440);
 }
 
@@ -216,13 +226,50 @@ function loadLevel3() {
 }
 
 function gameLoop() {
-  // movePlayer();
-  // checkWallCollision();
-  // checkBatberries();
-  // checkLevelExit();
-  // checkElectricTiles();
+  moveEnemies();
+  checkElectricTiles();
 
   requestAnimationFrame(gameLoop);
+}
+
+function moveEnemies() {
+  if (currentLevel !== 2) return;
+
+  for (let enemy of movingEnemies) {
+    if (enemy.direction === "horizontal") {
+      if (enemy.moveForward) {
+        enemy.x += enemy.speed;
+      } else {
+        enemy.x -= enemy.speed;
+      }
+
+      if (enemy.x >= enemy.startX + enemy.distance) {
+        enemy.moveForward = false;
+      }
+
+      if (enemy.x <= enemy.startX) {
+        enemy.moveForward = true;
+      }
+    }
+
+    if (enemy.direction === "vertical") {
+      if (enemy.moveForward) {
+        enemy.y += enemy.speed;
+      } else {
+        enemy.y -= enemy.speed;
+      }
+
+      if (enemy.y >= enemy.startY + enemy.distance) {
+        enemy.moveForward = false;
+      }
+
+      if (enemy.y <= enemy.startY) {
+        enemy.moveForward = true;
+      }
+    }
+
+    updatePosition(enemy);
+  }
 }
 
 function playCard(cardType) {
@@ -383,11 +430,11 @@ function checkBatberries() {
 }
 
 function checkLevelExit() {
-  if (currentLevel === 1 && batberries.length === 0 && collides(player, teleporter)) {
+  if (currentLevel === 1 && collides(player, teleporter)) {
     loadLevel2();
   }
 
-  if (currentLevel === 2 && batberries.length === 0 && collides(player, gate)) {
+  if (currentLevel === 2 && collides(player, gate)) {
     loadLevel3();
   }
 
@@ -397,13 +444,26 @@ function checkLevelExit() {
 }
 
 function checkElectricTiles() {
-  if (currentLevel !== 2) return;
+ if (currentLevel !== 2) return;
 
   for (let tile of electricTiles) {
     if (collides(player, tile)) {
+      score--;
+
+      if (score <= 0) {
+        score = 0;
+        scoreText.textContent = score;
+        loseGame();
+        return;
+      }
+
+      scoreText.textContent = score;
+
       player.x = 320;
       player.y = 440;
       updatePosition(player);
+
+      break;
     }
   }
 }
