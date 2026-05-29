@@ -12,8 +12,15 @@ const highScoreText = document.getElementById("high-score");
 const endTitle = document.getElementById("end-title");
 const endMessage = document.getElementById("end-message");
 
+const bossPanel = document.getElementById("boss-panel");
+const bossHpText = document.getElementById("boss-hp");
+
 const tileSize = 40;
 
+let boss = null;
+let botica = null;
+let bossHP = 3;
+let shieldActive = false;
 let currentLevel = 1;
 let score = 0;
 let highScore = Number(localStorage.getItem("whereTheBoticaHighScore")) || 0;
@@ -65,6 +72,10 @@ function clearBoard() {
   electricTiles = [];
   teleporter = null;
   gate = null;
+  boss = null;
+  botica = null;
+
+  bossPanel.classList.add("hidden");
 }
 
 function createElement(className, x, y, width = 40, height = 40) {
@@ -178,6 +189,28 @@ electricTiles.push(electric3);
 gate = createElement("gate", 680, 440);
 }
 
+function loadLevel3() {
+  clearBoard();
+
+  currentLevel = 3;
+  levelNumberText.textContent = currentLevel;
+
+  gameBoard.style.background = "#7dd3fc";
+
+  createPlayer(360, 440);
+
+  bossHP = 3;
+  shieldActive = false;
+
+  boss = createElement("boss", 360, 60, 64, 64);
+  botica = createElement("botica", 680, 80, 64, 64);
+
+  botica.element.style.opacity = "0.4";
+
+  bossPanel.classList.remove("hidden");
+  bossHpText.textContent = bossHP;
+}
+
 function gameLoop() {
   // movePlayer();
   // checkWallCollision();
@@ -187,27 +220,81 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+function playCard(cardType) {
+  if (currentLevel !== 3 || bossHP <= 0) return;
 
-// function movePlayer() {
-//   let speed = 3;
-//   let oldX = player.x;
-//   let oldY = player.y;
+  if (cardType === "quick") {
+    if (score < 1) {
+      loseGame();
+      return;
+    }
 
-//   if (keys["arrowup"] || keys["w"]) player.y -= speed;
-//   if (keys["arrowdown"] || keys["s"]) player.y += speed;
-//   if (keys["arrowleft"] || keys["a"]) player.x -= speed;
-//   if (keys["arrowright"] || keys["d"]) player.x += speed;
+    score--;
 
-//   if (player.x < 0) player.x = 0;
-//   if (player.y < 0) player.y = 0;
-//   if (player.x + player.width > 800) player.x = 800 - player.width;
-//   if (player.y + player.height > 550) player.y = 550 - player.height;
+    let damage = 1;
 
-//   player.oldX = oldX;
-//   player.oldY = oldY;
+    if (Math.random() < 0.25) {
+      damage = 2;
+    }
 
-//   updatePosition(player);
-// }
+    bossHP -= damage;
+  }
+
+  if (cardType === "heavy") {
+    if (score < 2) {
+      return;
+    }
+
+    score -= 2;
+    bossHP -= 2;
+  }
+
+  if (cardType === "shield") {
+    if (score < 1) {
+      return;
+    }
+
+    score--;
+    shieldActive = true;
+  }
+
+  if (bossHP < 0) bossHP = 0;
+
+  scoreText.textContent = score;
+  bossHpText.textContent = bossHP;
+
+  if (bossHP <= 0) {
+    defeatBoss();
+    return;
+  }
+
+  bossAttack();
+}
+function bossAttack() {
+  if (shieldActive) {
+    shieldActive = false;
+    return;
+  }
+
+  score--;
+
+  if (score <= 0) {
+    score = 0;
+    scoreText.textContent = score;
+    loseGame();
+    return;
+  }
+
+  scoreText.textContent = score;
+}
+
+function defeatBoss() {
+  boss.element.style.opacity = "0.3";
+  botica.element.style.opacity = "1";
+
+  endMessage.textContent = "Fredge is defeated! Go rescue Botica!";
+}
+
 function movePlayerOneTile(key) {
   let oldX = player.x;
   let oldY = player.y;
@@ -291,6 +378,10 @@ function checkLevelExit() {
   }
 
   if (currentLevel === 2 && batberries.length === 0 && collides(player, gate)) {
+    loadLevel3();
+  }
+
+  if (currentLevel === 3 && botica && bossHP <= 0 && collides(player, botica)) {
     winGame();
   }
 }
@@ -312,7 +403,7 @@ function winGame() {
   gameOverScreen.classList.remove("hidden");
 
   endTitle.textContent = "You Win!";
-  endMessage.textContent = `You collected ${score} Batberries.`;
+  endMessage.textContent = `You saved Botica and collected ${score} Batberries.`;
 
   if (score > highScore) {
     highScore = score;
