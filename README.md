@@ -101,3 +101,4 @@ Main functions:
 - Score and lose conditions added
 - Start screen and game over screen added
 - Restart functionality added
+- High score system implemented 
