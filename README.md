@@ -26,7 +26,7 @@ The goal is to collect batteries, avoid obstacles, solve simple puzzles, and def
 - Fredge: final boss
 - Chatboi: helper chatbot in the story (Optional)
 - Batberries: collectibles
-- Obstacles: walls, ice blocks, danger zones
+- Obstacles: snails and walls
 - Doors: open after completing puzzle goals (Optional)
 - Cards: attack/defense options during the boss fight
 
@@ -46,9 +46,9 @@ Level 1:
 - Reach the exit door
 
 Level 2:
-- Solve a harder puzzle
-- Avoid obstacles
-- Collect required batteries or activate switches
+- Avoid snails
+-Escape labyrinth
+- Collect batteries
 
 Boss Level:
 - Fight Fredge using cards

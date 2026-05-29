@@ -1,3 +1,11 @@
+const enemyAttackSound = new Audio("./sounds/enemy_attack.mp3");
+const finishingLevelSound = new Audio("./sounds/finishing_level.mp3");
+const boticaEscapedSound = new Audio("./sounds/Botica escaped.mp3");
+const gameOverSound = new Audio("./sounds/game over.mp3");
+const ranOutOfBatberriesSound = new Audio("./sounds/ran out of batberries.mp3");
+const fredgeIntroSound = new Audio("./sounds/fredge intro.mp3");
+const batberryCollectSound = new Audio("./sounds/batberry_collect.mp3");
+
 const startScreen = document.getElementById("start-screen");
 const gameScreen = document.getElementById("game-screen");
 const gameOverScreen = document.getElementById("game-over-screen");
