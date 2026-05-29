@@ -128,6 +128,11 @@ function createBatberry(x, y) {
   batberries.push(batberry);
 }
 
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
 function createMovingEnemy(x, y, direction, distance) {
   const enemy = createElement("enemy", x, y, 48, 48);
   enemy.startX = x;
@@ -429,6 +434,7 @@ function checkWallCollision() {
 function checkBatberries() {
   for (let i = batberries.length - 1; i >= 0; i--) {
     if (collides(player, batberries[i])) {
+      playSound(batberryCollectSound);
       batberries[i].element.remove();
       batberries.splice(i, 1);
       score++;
@@ -439,15 +445,26 @@ function checkBatberries() {
 
 function checkLevelExit() {
   if (currentLevel === 1 && collides(player, teleporter)) {
-    loadLevel2();
+    playSound(finishingLevelSound);
+    setTimeout(() => {
+      loadLevel2();
+    }, 1000);
   }
 
   if (currentLevel === 2 && collides(player, gate)) {
-    loadLevel3();
+    playSound(finishingLevelSound);
+
+    setTimeout(() => {
+      loadLevel3();
+    }, 1000);
   }
 
   if (currentLevel === 3 && botica && bossHP <= 0 && collides(player, botica)) {
-    winGame();
+    playSound(finishingLevelSound);
+    setTimeout(() => {
+       winGame();
+    }, 1000);
+   
   }
 }
 
@@ -491,6 +508,9 @@ function winGame() {
   highScoreText.textContent = highScore;
 }
 function loseGame() {
+
+  playSound(gameOverSound);
+  
   gameScreen.classList.add("hidden");
   gameOverScreen.classList.remove("hidden");
 
